@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<title>Lista Calciatori</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+</head>
+<body>
+<head th:insert="header.html"> </head>
+<br />
+	<div class="container-fluid text-center">
+		<div><h1>Lista Calciatori</h1></div>
+	</div>
+	<div class="m-2 text-center">
+		<a th:href = "@{/nuovoCalciatore}" class="btn btn-primary btn-sm mb-3"> Aggiungi Calciatore </a>
+	</div>	
+	<div th:if="${message}" class="alert alert-success text-center">
+		[[${message}]]
+	</div>
+	<div class="container my-2">
+		<table border="1" class = "table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=nome&sortDir=' + ${reverseSortDir}}">
+							Nome</a>
+					</th>
+					<th>
+					<a th:href="@{'/page/' + ${currentPage} + '?sortField=cognome&sortDir=' + ${reverseSortDir}}">
+							Cognome</a>
+					</th>
+					<th>
+					<a th:href="@{'/page/' + ${currentPage} + '?sortField=eta&sortDir=' + ${reverseSortDir}}">
+							Et&agrave;</a>
+					</th>
+					<th>
+					<a th:href="@{'/page/' + ${currentPage} + '?sortField=nazionalita&sortDir=' + ${reverseSortDir}}">
+							Nazionalit&agrave;</a>
+					</th>
+					<th>
+					<a th:href="@{'/page/' + ${currentPage} + '?sortField=ruolo&sortDir=' + ${reverseSortDir}}">
+							Ruolo</a>
+					</th>
+					<th>
+					<a th:href="@{'/page/' + ${currentPage} + '?sortField=ruolo&sortDir=' + ${reverseSortDir}}">
+							Squadra</a>
+					</th>
+					<th> </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="calciatore : ${listaCalciatori}">
+					<td th:text="${calciatore.nome}"></td>
+					<td th:text="${calciatore.cognome}"></td>
+					<td th:text="${calciatore.eta}"></td>
+					<td th:text="${calciatore.nazionalita}"></td>
+					<td th:text="${calciatore.ruolo}"></td>
+					<td th:text="${calciatore.squadra.nome}"></td>
+					<td> <a th:href="@{/showFormForUpdate/{id}(id=${calciatore.id})}" class="btn btn-primary">Modifica</a>
+					    <a th:href="@{/deleteCalciatore/{id}(id=${calciatore.id})}" class="btn btn-danger">Elimina</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div th:if = "${totalPages > 1}">
+			<div class = "row col-sm-10">
+				<div class = "col-sm-2">
+					Total Rows: [[${totalItems}]] 
+				</div>
+				<div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+				</div>
+				<div class = "col-sm-1">
+					<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Avanti</a>
+					<span th:unless="${currentPage < totalPages}">Avanti</span>
+				</div>
+				
+				 <div class="col-sm-1">
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Ultima</a>
+					<span th:unless="${currentPage < totalPages}">Ultima</span>
+   				 </div>
+			</div>
+		</div>
+	</div>
+</body>
+<!-- <head th:insert="footer.html"> </head>
+ --></html>

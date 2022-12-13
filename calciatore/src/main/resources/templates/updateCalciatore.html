@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Registration and Login System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+</head>
+<body>
+<head th:insert="header.html"> </head>
+<br /><br /><br />
+<div class="container">
+  <div class="row col-md-8 offset-md-2">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="text-center">Modifica Calciatore</h2>
+      </div>
+       <div class="card-body">
+		<form action="#" th:action="@{/updateCalciatore}" th:object="${calciatore}"
+			method="POST">
+			
+			<!-- Add hidden form field to handle update -->
+			<input type="hidden" th:field="*{id}" />
+			
+				<input type="text" th:field="*{nome}" class="form-control mb-4 col-4">				
+				<input type="text" th:field="*{cognome}" class="form-control mb-4 col-4">				
+				<input type="number" th:field="*{eta}" class="form-control mb-4 col-4">
+				 <select class="form-control" th:field="*{nazionalita}" >
+				     <option th:each="nazione : ${session.listaNazioni}" th:value="${nazione}" th:text="${nazione}"></option>
+				</select><br/>
+				 <select class="form-control" th:field="*{ruolo}">
+				    <option th:value="'Portiere'" th:text="Portiere"></option>
+				    <option th:value="'Difensore'" th:text="Difensore"></option>
+				    <option th:value="'Centrocampista'" th:text="Centrocampista"></option>
+				    <option th:value="'Attaccante'" th:text="Attaccante"></option>
+				</select><br/>
+				<select class="form-control" th:field="*{squadra.id}">
+				     <option th:each="squadra : ${session.listaSquadre}" th:value="${squadra.id}" th:text="${squadra.nome}"></option>
+				</select>
+				 <div class="form-group">
+				 <br/>
+	              <button class="btn btn-primary" type="submit">Aggiorna</button>
+	            </div>
+		</form>
+		</div>
+		</div>
+		</div>
+	</div>
+</body>
+</html>

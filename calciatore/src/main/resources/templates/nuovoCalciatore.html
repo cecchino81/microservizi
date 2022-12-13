@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Aggiungi calciatore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+</head>
+<body>
+<head th:insert="header.html"> </head>
+<br /><br /><br />
+<div class="container">
+  <div class="row col-md-8 offset-md-2">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="text-center">Nuovo Calciatore</h2>
+      </div>
+       <div class="card-body">
+          <form method="post" role="form" th:action="@{/salvaCalciatore}" th:object="${calciatore}">
+            <div class="form-group mb-3">
+              <input class="form-control" id="nome" name="nome"
+                      placeholder="Nome" th:field="*{nome}" type="text"/>
+              <p th:errors = "*{nome}" class="text-danger" th:if="${#fields.hasErrors('nome')}"></p>
+            </div>
+   			<div class="form-group mb-3">
+              <input class="form-control" id="cognome" name="cognome"
+                      placeholder="Cognome" th:field="*{cognome}" type="text"/>
+              <p th:if="${#fields.hasErrors('cognome')}" th:errors = "*{cognome}" class="text-danger"></p>
+            </div>
+   			<div class="form-group mb-3">
+              <input class="form-control" id="eta" name="eta"
+                      placeholder="Et&agrave;" th:field="*{eta}" type="number"/>
+              <p th:if="${#fields.hasErrors('eta')}" th:errors = "*{eta}" class="text-danger" ></p>
+            </div>            
+             <div class="form-group mb-3">
+            	<select class="form-control" th:field="*{nazionalita}" id="nazionalita">
+				     <option th:each="nazione : ${session.listaNazioni}" th:value="${nazione}" th:text="${nazione}"></option>
+				</select>
+			</div>
+            
+   			<div class="form-group mb-3">
+              <select class="form-control" th:field="*{ruolo}">
+			    <option th:value="'Portiere'" th:text="Portiere"></option>
+			    <option th:value="'Difensore'" th:text="Difensore"></option>
+			    <option th:value="'Centrocampista'" th:text="Centrocampista"></option>
+			    <option th:value="'Attaccante'" th:text="Attaccante"></option>
+			  </select>
+            </div>
+            
+            <div class="form-group mb-3">
+            	<select class="form-control" th:field="*{squadra.id}" id="squadra">
+				     <option th:each="squadra : ${listaSquadre}" th:value="${squadra.id}" th:text="${squadra.nome}"></option>
+				</select>
+			</div>
+         
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">Salva</button>
+             
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>
