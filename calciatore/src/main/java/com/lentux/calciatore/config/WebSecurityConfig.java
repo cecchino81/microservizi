@@ -14,21 +14,28 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+	@SuppressWarnings("deprecation")
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-        .antMatchers("/", "/index").permitAll()
-        .antMatchers("/images/**").permitAll()
-        .anyRequest().authenticated()
-        .and()
-        .formLogin()
-        	.loginPage("/login")
-        	.permitAll()
-        .and()
-        .logout()
-        .permitAll()
-        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-        .logoutSuccessUrl("/login");
+        http.authorizeRequests(requests ->{
+			try {
+				requests
+				        .requestMatchers("/", "/index").permitAll()
+				        .requestMatchers("/images/**").permitAll()
+				        .anyRequest().authenticated()
+				        .and()
+				        .formLogin(login -> login
+				                .loginPage("/login")
+				                .permitAll())
+				        .logout(logout -> logout
+				                .permitAll()
+				                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				                .logoutSuccessUrl("/login"));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
     return http.build();
 	}
 

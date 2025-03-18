@@ -2,9 +2,6 @@ package com.lentux.calciatore.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +20,8 @@ import com.lentux.calciatore.service.CalciatoreService;
 import com.lentux.calciatore.service.SquadraService;
 import com.lentux.calciatore.util.Utils;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @Controller
